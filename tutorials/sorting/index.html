@@ -3,9 +3,11 @@
         <title>Sorting Tutorials</title>
         <link rel="stylesheet" href="../../vendor/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="../../vendor/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="../../vendor/prism/prism.css" />
         
         <script type="text/javascript" src="../../vendor/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../vendor/prism/prism.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-light bg-light bg-red border-dark border-bottom fixed-top">
@@ -25,7 +27,9 @@
             </div>
         </nav>
         
-        <div class="container-fluid" style="margin-top: 70px !important;">
+        <div class="container" style="margin-top: 70px !important;">
+            <h2>Theory of Sorting</h2>
+            <br>
             In computer science, arranging in an ordered sequence is called "sorting". Sorting is a common operation in many applications, and efficient algorithms to perform it have been developed.
             <br>
             The most common uses of sorted sequences are:
@@ -63,10 +67,12 @@
             A standard order is often called ascending (corresponding to the fact that the standard order of numbers is ascending, i.e. A to Z, 0 to 9), the reverse order descending (Z to A, 9 to 0). For dates and times, ascending means that earlier values precede later ones e.g. 1/1/2000 will sort ahead of 1/1/2001.
         </div>
         
-        <div class="container-fluid">
-            <pre>
-            <code>
-# Selection sort implementation in Python 3
+        <div class="container" style="margin-top: 70px !important;">
+            <h2>Selection Sort</h2>
+            <h3>(Comparison sort of &theta;(N<sup>2</sup>) complexity)</h3>
+            <br>
+            
+            <pre class="lang-python"><code># Selection sort implementation in Python 3
 
 from random import random as r
 
@@ -88,9 +94,145 @@ def sort():
 if __name__ == "__main__":
     print("Unsorted Array: ", array)
     sort()
-    print("Sorted Array: ", array)
-            </code>
-            </pre>
+    print("Sorted Array: ", array)</code></pre>
         </div>
+        
+        
+        <div class="container" style="margin-top: 70px !important;">
+            <h2>Bubble Sort</h2>
+            <h3>(Comparison sort of &theta;(N<sup>2</sup>) complexity)</h3>
+            <br>
+            
+            <pre class="lang-python"><code># Bubble Sort implementation in Python 3
+
+from random import random as r
+
+array = [int(r() * 1024) for i in range(16)]
+
+
+def sort():
+    for i in range(len(array)):
+        for j in range(len(array) - i - 1):
+            if array[j] > array[j + 1]:
+                array[j], array[j + 1] = array[j + 1], array[j]
+
+
+if __name__ == "__main__":
+    print("Unsorted Array: ", array)
+    sort()
+    print("Sorted Array: ", array)</code></pre>
+        </div>
+        
+        
+        <div class="container" style="margin-top: 70px !important;">
+            <h2>Quick Sort</h2>
+            <h3>(Comparison sort of <code>&theta;(N log<sub>2</sub> N)</code> average-case complexity</h3>
+            <h3>Has <code>&theta;(N<sup>2</sup>)</code> worst-case complexity)</h3>
+            <br>
+            
+            <pre class="lang-python"><code># Quick Sort implementation in Python 3
+
+from random import random as r
+
+array = [int(r() * 1024) for i in range(16)]
+
+
+# Lomuto Partition function
+def partition(lb, ub):
+    pivot_index = ub
+    k = lb - 1
+    for i in range(lb, ub):
+        if array[i] < array[pivot_index]:
+            k += 1
+            array[k], array[i] = array[i], array[k]
+    k += 1
+    array[k], array[pivot_index] = array[pivot_index], array[k]
+    return k
+
+
+# Quick Sort recursive implementation
+def quick_sort(lb, ub):
+    if lb < ub:
+        p = partition(lb, ub)
+        quick_sort(lb, p - 1)
+        quick_sort(p + 1, ub)
+
+
+# Quick Sort implementation
+def sort():
+    quick_sort(0, len(array) - 1)
+
+
+if __name__ == "__main__":
+    print("Unsorted Array: ", array)
+    sort()
+    print("Sorted Array: ", array)</code></pre>
+        </div>
+        
+        
+        <div class="container" style="margin-top: 70px !important;">
+            <h2>Heap Sort</h2>
+            <h3>(Unstable comparison sort of <code>&theta;(N log<sub>2</sub> N)</code> complexity)</h3>
+            <br>
+            
+            <pre class="lang-python"><code># Heap Sort implementation in Python 3
+
+from random import random as r
+
+array = [int(r() * 1024) for i in range(16)]
+
+
+def parent(index):
+    return (index - 1) >> 1
+
+
+def right(index):
+    return (index << 1) + 1
+
+
+def left(index):
+    return (index << 1) + 2
+
+
+# Function to build max heap from given array
+def build_max_heap():
+    for i in range(len(array)):
+        index = i
+        while parent(index) >= 0 and array[index] > array[parent(index)]:
+            array[index], array[parent(index)] = array[parent(index)], array[index]
+            index = parent(index)
+
+
+# Iterative Heap Sort implementation
+def sort():
+    build_max_heap()
+    size = len(array)
+    for i in range(len(array)):
+        array[0], array[size - 1] = array[size - 1], array[0]
+        size -= 1
+        # Swim down the top of heap until balanced
+        current_index = 0
+        while True:
+            max_index = current_index
+            if left(current_index) < size and array[left(current_index)] > array[max_index]:
+                max_index = left(current_index)
+            if right(current_index) < size and array[right(current_index)] > array[max_index]:
+                max_index = right(current_index)
+            if max_index != current_index:
+                array[max_index], array[current_index] = array[current_index], array[max_index]
+                current_index = max_index
+            else:
+                break
+
+
+if __name__ == "__main__":
+    print("Unsorted Array: ", array)
+    build_max_heap()
+    print("Max Heap: ", array)
+    sort()
+    print("Sorted Array: ", array)</code></pre>
+        </div>
+        
+        
     </body>
 </html>
