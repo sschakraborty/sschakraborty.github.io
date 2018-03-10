@@ -19,10 +19,8 @@
             
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mr-auto border border-dark rounded text-center" style="margin: 25px !important; padding: 25px !important;">
-                    <li class="nav-item"><a class="nav-link" href="#">Website Main Page</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Tutorials Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Sorting Theory &amp; Introduction</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Python 3 Implementations</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../">Website Main Page</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../">Tutorials Home</a></li>
                 </ul>
             </div>
         </nav>
@@ -65,13 +63,48 @@
             <br><br>
 
             A standard order is often called ascending (corresponding to the fact that the standard order of numbers is ascending, i.e. A to Z, 0 to 9), the reverse order descending (Z to A, 9 to 0). For dates and times, ascending means that earlier values precede later ones e.g. 1/1/2000 will sort ahead of 1/1/2001.
+            
+            <br><br>
+            <h2>Stable v/s Unstable Sorting</h2>
+            <br>
+            
+            A sorting algorithm is said to be stable if two objects with equal keys appear in the same order in sorted output as they appear in the input unsorted array.
+            <br>
+            Whereas a sorting algorithm is said to be unstable if their are two or more objects with equal keys doesn't appear in same order before and after sorting.
+            
+            <br><br>
+            <div style="text-align: center;">
+                <img src="stable_unstable.jpeg">
+            </div>
+            
+            <br><br>
+            <h2>Stable v/s Unstable Sorting</h2>
+            <br>
+            
+            A sorting algorithm using at most <code>h</code> comparisons on all inputs corresponds to a tree of height at most <code>h</code>. Such a tree has at most <code>2 &times; h</code> leaves. On the other hand, each permutation of <code>1, ... ,N</code> must land at a different leaf, and so there must be at least <code>N!</code> leaves. Putting these together, we deduce that <code>2 &times; h &ge; N!</code> and so <code>h &ge; log<sub>2</sub> N! = &Omega;(N log N)</code> (using Stirling's approximation). So every sorting algorithm must use at least <code>log<sub>2</sub> N! = &Omega;(N log N)</code> comparisons in the worst case (on some inputs it can use less)
+            
         </div>
         
         <div class="container" style="margin-top: 70px !important;">
             <h2>Selection Sort</h2>
-            <h3>(Comparison sort of &theta;(N<sup>2</sup>) complexity)</h3>
+            <h3>(Stable comparison sort of <code>&theta;(N<sup>2</sup>)</code> complexity)</h3>
             <br>
             
+            Selection sort is a sorting algorithm, specifically an in-place comparison sort. It has <code>&theta;(N<sup>2</sup>)</code> time complexity, making it inefficient on large lists, and generally performs worse than the similar insertion sort. Selection sort is noted for its simplicity, and it has performance advantages over more complicated algorithms in certain situations, particularly where auxiliary memory is limited.
+            <br><br>
+            The algorithm divides the input list into two parts: the sublist of items already sorted, which is built up from left to right at the front (left) of the list, and the sublist of items remaining to be sorted that occupy the rest of the list. Initially, the sorted sublist is empty and the unsorted sublist is the entire input list. The algorithm proceeds by finding the smallest (or largest, depending on sorting order) element in the unsorted sublist, exchanging (swapping) it with the leftmost unsorted element (putting it in sorted order), and moving the sublist boundaries one element to the right.
+            <br>
+            <br>
+            Points to note:
+            <ul>
+                <li>Selection sort is an in-place comparison sort.
+                <li>Best, average and worst case time complexity is <code>&theta;(N<sup>2</sup>)</code>
+                <li>It has one of the lowest number of swaps of all sorting algorithms.
+            </ul>
+            
+            <img src="selection_sort.png" style="height: 500px; width: 100%;">
+            
+            <br>
             <pre class="lang-python"><code># Selection sort implementation in Python 3
 
 from random import random as r
@@ -100,8 +133,16 @@ if __name__ == "__main__":
         
         <div class="container" style="margin-top: 70px !important;">
             <h2>Bubble Sort</h2>
-            <h3>(Comparison sort of &theta;(N<sup>2</sup>) complexity)</h3>
+            <h3>(Stable comparison sort of <code>&theta;(N<sup>2</sup>)</code> complexity)</h3>
             <br>
+            
+            Bubble sort, sometimes referred to as <code>sinking sort</code>, is a simple sorting algorithm that repeatedly steps through the list to be sorted, compares each pair of adjacent items and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed, which indicates that the list is sorted. The algorithm, which is a comparison sort, is named for the way smaller or larger elements "bubble" to the top of the list. Although the algorithm is simple, it is too slow and impractical for most problems even when compared to insertion sort. It can be practical if the input is usually in sorted order but may occasionally have some out-of-order elements nearly in position.
+            
+            Bubble sort has worst-case and average complexity both <code>&theta;(N<sup>2</sup>)</code>, where n is the number of items being sorted. There exist many sorting algorithms, such as merge sort with substantially better worst-case or average complexity of <code>&theta;(N log<sub>2</sub> N)</code>. Even other <code>&theta;(N<sup>2</sup>)</code> sorting algorithms, such as insertion sort, tend to have better performance than bubble sort. Therefore, bubble sort is not a practical sorting algorithm when n is large.
+            
+            <div style="text-align: center;">
+                <img src="bubble_sort.png" style="height: 500px; width: 650px;">
+            </div>
             
             <pre class="lang-python"><code># Bubble Sort implementation in Python 3
 
@@ -128,6 +169,27 @@ if __name__ == "__main__":
             <h2>Quick Sort</h2>
             <h3>(Comparison sort of <code>&theta;(N log<sub>2</sub> N)</code> average-case complexity</h3>
             <h3>Has <code>&theta;(N<sup>2</sup>)</code> worst-case complexity)</h3>
+            <br>
+            
+            Quick Sort (sometimes called partition-exchange sort) is an efficient sorting algorithm, serving as a systematic method for placing the elements of an array in order. Developed by Tony Hoare in 1959 and published in 1961, it is still a commonly used algorithm for sorting. When implemented well, it can be about two or three times faster than it's main competitors, merge sort and heapsort.
+            <br><br>
+            Quick Sort is a comparison sort, meaning that it can sort items of any type for which a "less-than" relation (formally, a total order) is defined. In efficient implementations it is not a stable sort, meaning that the relative order of equal sort items is not preserved. Quicksort can operate in-place on an array, requiring small additional amounts of memory to perform the sorting. It is very similar to selection sort, except that it does not always choose worst-case partition.
+            <br><br>
+            Mathematical analysis of quicksort shows that, on average, the algorithm takes <code>&theta;(N log<sub>2</sub> N)</code> comparisons to sort n items. In the worst case, it makes <code>O(N<sup>2</sup>)</code> comparisons, though this behavior is rare.
+            
+            <br><br>
+            Example of partition function (Showing a single pass)
+            <br>
+            <div style="text-align: center;">
+                <img src="quick_sort_1.png">
+            </div>
+            
+            <br><br>
+            Showing Quick Sort as divide-&amp;-conquer algorithm
+            <br><br>
+            <div style="text-align: center;">
+                <img src="quick_sort_2.jpeg">
+            </div>
             <br>
             
             <pre class="lang-python"><code># Quick Sort implementation in Python 3
@@ -175,6 +237,45 @@ if __name__ == "__main__":
             <h3>(Unstable comparison sort of <code>&theta;(N log<sub>2</sub> N)</code> complexity)</h3>
             <br>
             
+            In computer science, heapsort is a comparison-based sorting algorithm. Heap Sort can be thought of as an improved selection sort: like that algorithm, it divides its input into a sorted and an unsorted region, and it iteratively shrinks the unsorted region by extracting the largest element and moving that to the sorted region. The improvement consists of the use of a heap data structure rather than a linear-time search to find the maximum.
+            <br>
+            <br>
+
+            Although somewhat slower in practice on most machines than a well-implemented quicksort, it has the advantage of a more
+            favorable worst-case <code>&theta;(N log<sub>2</sub> N)</code> runtime. Heapsort is an in-place algorithm, but it is not a stable sort.
+            <br>
+            <br>
+
+            Heap Sort was invented by J. W. J. Williams in 1964. This was also the birth of the heap, presented already by Williams as a useful data structure in its own right. In the same year, R. W. Floyd published an improved version that could sort an array in-place, continuing his earlier research into the treesort algorithm.
+            
+            <br><br>
+            The heapsort algorithm can be divided into two parts.
+
+            <br><br>
+            In the first step, a heap is built out of the data. The heap is often placed in an array with the layout of a complete binary tree. The complete binary tree maps the binary tree structure into the array indices; each array index represents a node; the index of the node's parent, left child branch, or right child branch are simple expressions. For a zero-based array, the root node is stored at index 0; if i is the index of the current node, then
+
+            <br><br>
+            <code>
+                iParent(i) = floor((i - 1) / 2) where floor functions map a real number to the smallest leading integer
+                <br>
+                iLeftChild(i)  = 2 &times; i + 1
+                <br>
+                iRightChild(i) = 2 &times; i + 2
+            </code>
+            
+            <br><br>
+            In the second step, a sorted array is created by repeatedly removing the largest element from the heap (the root of the heap), and inserting it into the array. The heap is updated after each removal to maintain the heap property. Once all objects have been removed from the heap, the result is a sorted array.
+
+            <br><br>
+            Heap Sort can be performed in place. The array can be split into two parts, the sorted array and the heap. The storage of heaps as arrays is diagrammed here. The heap's invariant is preserved after each extraction, so the only cost is that of extraction.
+            
+            <br><br>
+            
+            <div style="text-align: center;">
+                <img src="heap_sort.png">
+            </div>
+            
+            <br>
             <pre class="lang-python"><code># Heap Sort implementation in Python 3
 
 from random import random as r
@@ -233,6 +334,6 @@ if __name__ == "__main__":
     print("Sorted Array: ", array)</code></pre>
         </div>
         
-        
+        <br>
     </body>
 </html>
